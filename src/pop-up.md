@@ -1,17 +1,13 @@
-The goal of this app is to gather input on where you believe specific tasks in the Implementation BRS should be planned. From your input we will build a project template that effectively categorises tasks into iterations. This structured approach will drastically save time during future project creation.
+## Help Us Map the BRS Template! (v0.1.0)
 
-### Instructions to Provide Your Input
+We’re building a new master template to group BRS tasks into recommended phases. The goal? Stop starting from scratch every single time we kick off a new project.
 
-**Filter:** We would appreciate as much input from you as possible, but if you only want to focus on one specific area, you can filter the tasks accordingly to start.
+Spreadsheets are painful to stare at, so I spent some time over the weekend hacking this tool together to make voting quick and easy.
 
-**Organize:** Drag and drop each task into the appropriate iteration.
+How you can help:
 
-**Submit:** Once you have finished sorting the tasks, click the Submit Vote button. You can always come back and vote again or complete more areas later!
+* **Filter first:** Only have five minutes? Use the filter at the top to slice the list by BRS area. Sorting even a single section is a massive help. You can always log back in to finish the rest later.
+* **Drag & drop:** Grab tasks from the first column and slide them into the iteration columns on your right. (Quick heads-up: Iterations 0 and 3 are optional—only use them if a task absolutely belongs there.)
+* **Save your work:** Click Submit Vote to lock in your choices.
 
-#### A Note on Iterations
-
-Iteration 0 and Iteration 3 are completely optional. They have been included for added flexibility, but you should only use them if you feel they are strictly necessary for your workflow.
-
-### Alpha Version Disclaimer
-
-Thank you for your valuable input! Please keep in mind that this is an early alpha version of the app, built over the weekend. If you encounter any bugs or if something breaks, I apologize in advance—please just let me know so I can address it.
+**One tiny warning:** I built this in a weekend. It's early alpha, and you are my test group. If something breaks or acts weird, don't stress. Just ping me directly and I'll jump in to fix it before we roll this out to the wider team.

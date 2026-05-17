@@ -39,8 +39,13 @@ import { Column } from './components/Column.tsx';
 
 const socket: Socket = io();
 
-// Get or create unique session ID for this user
 const getSessionId = () => {
+  const urlParam = new URLSearchParams(window.location.search).get('session');
+  if (urlParam && urlParam.length >= 5) {
+    localStorage.setItem('voter_session_id', urlParam);
+    window.history.replaceState({}, '', window.location.pathname);
+    return urlParam;
+  }
   let id = localStorage.getItem('voter_session_id');
   if (!id) {
     id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -140,6 +145,7 @@ export default function App() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const [showPopup, setShowPopup] = useState(true);
+  const [copied, setCopied] = useState(false);
   const [runTour, setRunTour] = useState(false);
   const [tourKey, setTourKey] = useState(0);
 
@@ -437,6 +443,16 @@ export default function App() {
         
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(`${window.location.origin}?session=${sessionId}`);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="flex items-center gap-2 px-3 py-2 rounded text-xs font-bold text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"
+            >
+              {copied ? 'Copied!' : 'Copy Link'}
+            </button>
             <button
               onClick={relaunchTour}
               className="flex items-center gap-2 px-3 py-2 rounded text-xs font-bold text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"

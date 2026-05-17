@@ -90,23 +90,28 @@ async function loadDefaultTasks(): Promise<Task[]> {
 const sessionStore = new Map<string, BoardState>();
 
 async function loadSessionState(sessionId: string): Promise<BoardState> {
-  if (sessionStore.has(sessionId)) {
-    return sessionStore.get(sessionId)!;
+  if (sessionStore.has(sessionId)) return sessionStore.get(sessionId)!;
+
+  try {
+    const file = path.join(SESSIONS_DIR, `${sessionId}.json`);
+    const raw = await fs.readFile(file, 'utf-8');
+    const state = JSON.parse(raw) as BoardState;
+    sessionStore.set(sessionId, state);
+    return state;
+  } catch {
+    // no saved session — first visit
   }
+
   const defaultTasks = await loadDefaultTasks();
-  const initialState = {
-    backlog: defaultTasks,
-    iteration0: [],
-    iteration1: [],
-    iteration2: [],
-    iteration3: [],
-  };
+  const initialState = { backlog: defaultTasks, iteration0: [], iteration1: [], iteration2: [], iteration3: [] };
   sessionStore.set(sessionId, initialState);
   return initialState;
 }
 
 async function saveSessionState(sessionId: string, state: BoardState) {
   sessionStore.set(sessionId, state);
+  const file = path.join(SESSIONS_DIR, `${sessionId}.json`);
+  await fs.writeFile(file, JSON.stringify(state), 'utf-8').catch(console.error);
 }
 
 async function startServer() {

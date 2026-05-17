@@ -59,7 +59,7 @@ let cachedDefaultTasks: Task[] | null = null;
 
 async function loadDefaultTasks(): Promise<Task[]> {
   try {
-    const csvData = await fs.readFile(path.join(process.cwd(), "tasks.csv"), "utf-8");
+    const csvData = await fs.readFile(path.join(process.cwd(), "src", "tasks.csv"), "utf-8");
     const lines = csvData.split("\n");
     const tasks: Task[] = [];
     

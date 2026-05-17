@@ -281,8 +281,7 @@ export default function App() {
     setIsSubmitting(true);
     setSubmitSuccess(false);
     try {
-      // 1. Log submission to server
-      await fetch('/api/submit', {
+      const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -290,48 +289,16 @@ export default function App() {
         body: JSON.stringify({ board, sessionId }),
       });
 
-      // 2. Open local email client
-      const recipient = "rgottwald@bluebridgeone.com";
-      const subject = encodeURIComponent("Iteration Planner: Voting Results");
-      
-      let bodyText = "Here are the results of the iteration voting:\n\n";
-
-      bodyText += "--- ITERATION 0 ---\n";
-      if (board.iteration0.length === 0) bodyText += "No tasks\n";
-      board.iteration0.forEach((t, i) => {
-        bodyText += `${i + 1}. [${t.area || 'General'}] ${t.content}\n`;
-      });
-
-      bodyText += "\n--- ITERATION 1 ---\n";
-      if (board.iteration1.length === 0) bodyText += "No tasks\n";
-      board.iteration1.forEach((t, i) => {
-        bodyText += `${i + 1}. [${t.area || 'General'}] ${t.content}\n`;
-      });
-
-      bodyText += "\n--- ITERATION 2 ---\n";
-      if (board.iteration2.length === 0) bodyText += "No tasks\n";
-      board.iteration2.forEach((t, i) => {
-        bodyText += `${i + 1}. [${t.area || 'General'}] ${t.content}\n`;
-      });
-
-      bodyText += "\n--- ITERATION 3 ---\n";
-      if (board.iteration3.length === 0) bodyText += "No tasks\n";
-      board.iteration3.forEach((t, i) => {
-        bodyText += `${i + 1}. [${t.area || 'General'}] ${t.content}\n`;
-      });
-
-      bodyText += "\n\nSubmitted via Iteration Planner";
-
-      const bodyEncoded = encodeURIComponent(bodyText);
-      const link = document.createElement('a');
-      link.href = `mailto:${recipient}?subject=${subject}&body=${bodyEncoded}`;
-      link.target = '_blank';
-      link.click();
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Upload failed');
+      }
 
       setSubmitSuccess(true);
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (err) {
-      console.error('Error submitting results', err);
+      console.error('Error submitting votes:', err);
+      alert('Failed to upload votes: ' + (err instanceof Error ? err.message : 'Unknown error'));
     } finally {
       setIsSubmitting(false);
     }

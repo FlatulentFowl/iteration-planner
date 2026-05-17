@@ -4,12 +4,26 @@ import { createServer as createHttpServer } from "http";
 import { Server } from "socket.io";
 import { createServer as createViteServer } from "vite";
 import fs from "fs/promises";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = 3000;
 const SESSIONS_DIR = path.join(process.cwd(), "sessions");
 
 // Ensure sessions directory exists
 fs.mkdir(SESSIONS_DIR, { recursive: true }).catch(console.error);
+
+// S3 Client initialization
+const s3Client = new S3Client({
+  region: process.env.S3_REGION || "us-east-1",
+  endpoint: process.env.S3_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY || "",
+    secretAccessKey: process.env.S3_SECRET_KEY || "",
+  },
+});
 
 interface Task {
   id: string;
@@ -138,16 +152,42 @@ async function startServer() {
     res.json(state);
   });
 
-  // Submit route - handles the final vote and "emails" result
+  // Submit route - uploads board state to S3
   app.post("/api/submit", async (req, res) => {
     const { board, sessionId } = req.body;
-    const recipient = "rgottwald@bluebridgeone.com";
-    
-    console.log("======================================");
-    console.log(`SUBMISSION RECEIVED from session ${sessionId} for ${recipient}`);
-    console.log("======================================");
 
-    res.json({ status: "ok", message: "Logged submission to console." });
+    if (!board || !sessionId) {
+      return res.status(400).json({ error: "board and sessionId required" });
+    }
+
+    try {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const filename = `votes-${sessionId}-${timestamp}.json`;
+      const fileContent = JSON.stringify(board, null, 2);
+
+      const command = new PutObjectCommand({
+        Bucket: process.env.S3_BUCKET || "assembled-flask-38nwwg4lh",
+        Key: filename,
+        Body: fileContent,
+        ContentType: "application/json",
+      });
+
+      await s3Client.send(command);
+
+      console.log(`✓ Votes submitted from ${sessionId} → s3://${process.env.S3_BUCKET}/${filename}`);
+      res.json({
+        status: "success",
+        message: "Votes uploaded successfully",
+        filename
+      });
+    } catch (error) {
+      console.error("S3 upload failed:", error);
+      res.status(500).json({
+        status: "error",
+        message: "Failed to upload votes",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
   });
 
   // Vite middleware for development

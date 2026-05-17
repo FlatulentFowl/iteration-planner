@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import popupContent from './pop-up.md?raw';
 import { Joyride, Step } from 'react-joyride';
 import { io, Socket } from 'socket.io-client';
 import {
@@ -60,6 +61,70 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
+function PopupModal({ onClose }: { onClose: () => void }) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === overlayRef.current) onClose();
+  };
+
+  const renderInline = (text: string) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, i) =>
+      /^\*\*[^*]+\*\*$/.test(part)
+        ? <strong key={i} className="font-semibold text-slate-900">{part.slice(2, -2)}</strong>
+        : part
+    );
+  };
+
+  const renderMarkdown = (md: string) => {
+    const lines = md.split('\n');
+    return lines.map((line, i) => {
+      if (/^#### /.test(line)) return <h4 key={i} className="text-sm font-bold text-slate-700 mt-3 mb-1">{renderInline(line.slice(5))}</h4>;
+      if (/^### /.test(line)) return <h3 key={i} className="text-base font-bold text-slate-800 mt-4 mb-1">{renderInline(line.slice(4))}</h3>;
+      if (/^## /.test(line)) return <h2 key={i} className="text-lg font-bold text-slate-800 mt-4 mb-1">{renderInline(line.slice(3))}</h2>;
+      if (/^# /.test(line)) return <h1 key={i} className="text-xl font-bold text-slate-900 mt-4 mb-2">{renderInline(line.slice(2))}</h1>;
+      if (/^- /.test(line)) return <li key={i} className="ml-4 list-disc text-sm text-slate-700">{renderInline(line.slice(2))}</li>;
+      if (line.trim() === '') return <br key={i} />;
+      return <p key={i} className="text-sm text-slate-700 leading-relaxed">{renderInline(line)}</p>;
+    });
+  };
+
+  return (
+    <div
+      ref={overlayRef}
+      onClick={handleOverlayClick}
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 flex flex-col max-h-[80vh]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 shrink-0">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800">Information</h2>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-700 transition-colors text-xl leading-none"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <div className="px-6 py-5 overflow-y-auto flex-1">
+          {popupContent.trim() ? renderMarkdown(popupContent) : (
+            <p className="text-sm text-slate-400 italic">No content.</p>
+          )}
+        </div>
+        <div className="px-6 py-4 border-t border-slate-200 shrink-0 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-5 py-2 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-800 transition-colors"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [board, setBoard] = useState<BoardState>({
     backlog: [],
@@ -74,11 +139,11 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  const [showPopup, setShowPopup] = useState(true);
   const [runTour, setRunTour] = useState(false);
   const [tourKey, setTourKey] = useState(0);
 
   useEffect(() => {
-    // Only run tour once per browser session for simplicity, or we can check localStorage
     const hasSeenTour = localStorage.getItem('hasSeenTour');
     if (!hasSeenTour) {
       setRunTour(true);
@@ -94,10 +159,10 @@ export default function App() {
       placement: 'bottom',
     },
     {
-      target: '.tour-task-column',
+      target: '.tour-task-column-header',
       title: 'Drag Tasks',
       content: 'Drag a task from the backlog...',
-      placement: 'right',
+      placement: 'bottom',
     },
     {
       target: '.tour-iteration-columns',
@@ -319,6 +384,7 @@ export default function App() {
 
   return (
     <div className="h-screen bg-slate-50 text-slate-900 font-sans flex flex-col overflow-hidden select-none">
+      {showPopup && <PopupModal onClose={() => setShowPopup(false)} />}
       <Joyride
         key={tourKey}
         steps={tourSteps}

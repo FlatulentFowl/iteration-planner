@@ -24,7 +24,7 @@ export function Column({ id, title, icon, description, tasks, variant = 'main', 
   if (variant === 'sidebar') {
     return (
       <div className="flex flex-col h-full bg-slate-100/80 rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="p-4 flex flex-col gap-3 border-b border-slate-200 bg-slate-50/50">
+        <div className="tour-task-column-header p-4 flex flex-col gap-3 border-b border-slate-200 bg-slate-50/50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {icon}

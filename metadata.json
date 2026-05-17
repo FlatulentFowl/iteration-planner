@@ -1,0 +1,8 @@
+{
+  "name": "Iteration Voter",
+  "description": "A professional real-time iteration planning app. Drag tasks between columns to vote and plan. All changes are synced across users.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

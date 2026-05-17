@@ -1,0 +1,100 @@
+area,task,color
+Incentive Compensation,Reporting,#EAD1DC
+Incentive Compensation,Other Configuration and Customisation,#EAD1DC
+Inventory Management,Assemblies,#D9EAD3
+Inventory Management,Multi-Location Inventory,#D9EAD3
+Inventory Management,Multiple Units of Measure,#D9EAD3
+Inventory Management,Bar Coding,#D9EAD3
+Inventory Management,Item Ordering,#D9EAD3
+Inventory Management,Demand Planning,#D9EAD3
+Inventory Management,Supply Planning,#D9EAD3
+Inventory Management,Distribution Networks,#D9EAD3
+Inventory Management,Replenishment and Withdrawal,#D9EAD3
+Inventory Management,Bin Management,#D9EAD3
+Inventory Management,Inventory Transfers,#D9EAD3
+Inventory Management,Inventory Adjustments and Counts,#D9EAD3
+Inventory Management,Work Orders,#D9EAD3
+Inventory Management,Contract Manufacturing,#D9EAD3
+Inventory Management,Reporting,#D9EAD3
+Inventory Management,Other Configuration and Customisation,#D9EAD3
+Items,Item Types,#C9DAF8
+Items,Serialised Inventory,#C9DAF8
+Items,Lot Numbering,#C9DAF8
+Items,Matrix Items,#C9DAF8
+Items,Item Costing,#C9DAF8
+Items,Item Pricing,#C9DAF8
+Items,Reporting,#C9DAF8
+Items,Other Configuration and Customisation,#C9DAF8
+Marketing Automation,Marketing Campaigns,#FCE5CD
+Marketing Automation,Email Marketing,#FCE5CD
+Marketing Automation,Campaign ROI Tracking,#FCE5CD
+Marketing Automation,Reporting,#FCE5CD
+Marketing Automation,Other Configuration and Customisation,#FCE5CD
+Order to Cash,Customers,#FFF2CC
+Order to Cash,Sales Orders,#FFF2CC
+Order to Cash,Item Commitment to Orders,#FFF2CC
+Order to Cash,Estimated Gross Profit,#FFF2CC
+Order to Cash,Order Fulfillment,#FFF2CC
+Order to Cash,Manage Invoices,#FFF2CC
+Order to Cash,Customer Payments,#FFF2CC
+Order to Cash,Reporting,#FFF2CC
+Order to Cash,Other Configuration and Customisation,#FFF2CC
+Order to Cash,Returns Management,#FFF2CC
+Procure to Pay,Suppliers,#D0E0E3
+Procure to Pay,Purchase Orders,#D0E0E3
+Procure to Pay,Multiple Vendors,#D0E0E3
+Procure to Pay,Item Receipts,#D0E0E3
+Procure to Pay,Inbound Shipments,#D0E0E3
+Procure to Pay,Vendor Bills,#D0E0E3
+Procure to Pay,Supplier Prepayments,#D0E0E3
+Procure to Pay,Supplier Payments,#D0E0E3
+Procure to Pay,Supplier Returns,#D0E0E3
+Procure to Pay,Supplier Credits,#D0E0E3
+Procure to Pay,Other Configuration and Customisation,#D0E0E3
+Procure to Pay,Employee Expenses,#D0E0E3
+Procure to Pay,EFT Payments,#D0E0E3
+Procure to Pay,Company Credit Cards,#D0E0E3
+Procure to Pay,Reporting,#D0E0E3
+Procure to Pay,Purchase Requests,#D0E0E3
+Procure to Pay,Landed Costs,#D0E0E3
+Project Management,Project Records,#E6B8AF
+Project Management,Project Tasks,#E6B8AF
+Project Management,Resource Allocations,#E6B8AF
+Project Management,Time Tracking,#E6B8AF
+Project Management,Project Billing,#E6B8AF
+Project Management,Reporting,#E6B8AF
+Project Management,Other Configuration and Customisation,#E6B8AF
+Record to Report,Subsidiaries,#B4A7D6
+Record to Report,Chart of Accounts,#B4A7D6
+Record to Report,Classifications,#B4A7D6
+Record to Report,Currencies,#B4A7D6
+Record to Report,Taxes & Reporting,#B4A7D6
+Record to Report,Journal Entries,#B4A7D6
+Record to Report,Bank Reconciliation,#B4A7D6
+Record to Report,Budgeting,#B4A7D6
+Record to Report,Consolidation,#B4A7D6
+Record to Report,Intercompany Transactions,#B4A7D6
+Record to Report,Reporting,#B4A7D6
+Record to Report,Other Configuration and Customisation,#B4A7D6
+Relationships,Partners,#D5A6BD
+Relationships,Contacts,#D5A6BD
+Relationships,Other Names,#D5A6BD
+Relationships,Groups,#D5A6BD
+Relationships,Duplicate Detection,#D5A6BD
+Relationships,Employees,#D5A6BD
+Sales Force Automation,Activities,#A4C2F4
+Sales Force Automation,Messages,#A4C2F4
+Sales Force Automation,Bulk Merge,#A4C2F4
+Sales Force Automation,Lead Routing and Assignment,#A4C2F4
+Sales Force Automation,Opportunity and Estimate Management,#A4C2F4
+Sales Force Automation,Team Selling,#A4C2F4
+Sales Force Automation,Sales Quotas,#A4C2F4
+Sales Force Automation,Forecasting,#A4C2F4
+Sales Force Automation,Reporting,#A4C2F4
+Sales Force Automation,Other Configuration and Customisation,#A4C2F4
+Support Management,Case Management,#F9CB9C
+Support Management,Automated Case Escalation,#F9CB9C
+Support Management,Knowledge Base,#F9CB9C
+Support Management,Customer Center,#F9CB9C
+Support Management,Reporting,#F9CB9C
+Support Management,Other Configuration and Customisation,#F9CB9C
